@@ -2,8 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-    #- cron: '0 7 * * 1'
+    - cron: '0 7 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -16,6 +15,6 @@ jobs:
           owner: pjfanning
           repo: excel-streaming-reader
           base: main
-          head: esr/sync-workflow
+          head: main
           # Passes the check so the flow doesn't fail even if there was nothing to sync with
           ignore_fail: true
