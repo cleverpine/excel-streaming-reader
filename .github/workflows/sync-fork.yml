@@ -1,0 +1,23 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: tgymnich/fork-sync@v1.8
+        with:
+          owner: pjfanning
+          repo: excel-streaming-reader
+          base: main
+          head: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Passes the check so the flow doesn't fail even if there was nothing to sync with
+          ignore_fail: true
