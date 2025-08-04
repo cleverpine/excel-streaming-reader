@@ -2,10 +2,10 @@ plugins {
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'io.github.gradle-nexus.publish-plugin' version "2.0.0"
-    id 'org.cyclonedx.bom' version "2.2.0"
-    id 'org.sonarqube' version "4.0.0.2929"
-    id 'io.github.sgtsilvio.gradle.javadoc-links' version "0.8.0"
+    id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
+    id 'org.cyclonedx.bom' version '2.3.1'
+    id 'org.sonarqube' version '4.0.0.2929'
+    id 'io.github.sgtsilvio.gradle.javadoc-links' version '0.8.0'
 }
 
 sonarqube {
@@ -19,7 +19,7 @@ sonarqube {
 }
 
 group = 'com.github.pjfanning'
-version = '5.0.5-SNAPSHOT'
+version = '5.1.2-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -45,14 +45,14 @@ dependencies {
     api "org.apache.poi:poi:$poiVersion"
     api "org.apache.poi:poi-ooxml:$poiVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
-    implementation 'commons-io:commons-io:2.18.0'
-    implementation 'org.apache.commons:commons-compress:1.27.1'
+    implementation 'commons-io:commons-io:2.20.0'
+    implementation 'org.apache.commons:commons-compress:1.28.0'
     poiSharedStringsImplementation "com.github.pjfanning:poi-shared-strings:$poiSharedStringsVersion"
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.nanohttpd:nanohttpd:2.3.1'
     testImplementation 'org.mockito:mockito-core:4.11.0'
     testRuntimeOnly "org.slf4j:slf4j-simple:$slf4jVersion"
-    testRuntimeOnly 'org.apache.logging.log4j:log4j-to-slf4j:2.24.3'
+    testRuntimeOnly 'org.apache.logging.log4j:log4j-to-slf4j:2.25.1'
 }
 
 test {
@@ -73,7 +73,11 @@ javadoc.dependsOn('copyLicenseToBuildResources')
 
 nexusPublishing {
     repositories {
-        sonatype()
+        // see https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/#configuration
+        sonatype {
+            nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
+        }
     }
 }
 
